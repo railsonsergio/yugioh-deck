@@ -1,21 +1,20 @@
-import { StyleSheet, Text, View } from 'react-native';
-
+import AppLoading from 'expo-app-loading';
+import { useAssets } from 'expo-asset';
 import { StatusBar } from 'expo-status-bar';
 
+import { Deck } from '~/components/Deck';
+import { images } from '~/constants/images';
+
 export default function App() {
+  const allAssets = [...Object.values(images), require('~/assets/background.png')];
+  const [assets] = useAssets(allAssets);
+
+  if (!assets) return <AppLoading />;
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <Deck numberCards={12} />
+      <StatusBar style="light" translucent />
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
